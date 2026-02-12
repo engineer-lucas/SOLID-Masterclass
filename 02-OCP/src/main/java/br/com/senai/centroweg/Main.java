@@ -21,11 +21,11 @@ public class Main {
     double comVip = calculadoraDesconto.aplicar(meuPedido, new DescontoVip());
 
     //Exibindo os resultado
-
+        System.out.println("===================================================");
         System.out.println("Valor Original: R$ " + meuPedido.getValorBruto());
         System.out.println("Valor com DESCONTO DE CUPOM: R$ " + comCupon);
         System.out.println("Valor com DESCONTO DE ANIVERSÁRIO: R$ " + comAniversario);
         System.out.println("Valor com DESCONTO DE VIP: R$ " + comVip);
-        System.out.println("======================");
+        System.out.println("===================================================");
     }
 }
