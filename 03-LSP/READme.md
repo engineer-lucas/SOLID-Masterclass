@@ -116,3 +116,48 @@ Imagine um controle remoto universal (Interface): ele tem o botão "Ligar".
 * **Violação de LSP:** Se ao trocar pela Samsung, o botão "Ligar" passasse a aumentar o volume ou desse erro, o princípio estaria quebrado, pois o objeto substituto não honrou o comportamento esperado do original.
 
 **No seu código, o `ProcessadorDePagamento` é o controle remoto, e as `Strategies` de frete são as diferentes marcas de TV que ele controla sem precisar saber qual é qual.**
+
+Com certeza! Na verdade, a beleza do **SOLID** é que os princípios são cumulativos. Ao resolver o problema do **LSP**, acabamos reforçando e "blindando" os princípios que você estudou anteriormente (SRP e OCP).
+
+Veja como o seu projeto atual respeita cada um deles:
+
+### 1. SRP (Princípio da Responsabilidade Única)
+
+* **Antes:** A classe `Pedido` tentava ser um objeto de dados e, ao mesmo tempo, calcular seu próprio frete.
+* **Agora:** * `Pedido` só guarda dados (Responsabilidade única).
+* As classes `Frete...` só calculam frete.
+* O `PedidoRepository` só salva no banco.
+* O `ProcessadorDePagamento` só orquestra o fluxo.
+* *Cada classe tem apenas um motivo para mudar.*
+
+
+
+### 2. OCP (Princípio Aberto/Fechado)
+
+* **Na Prática:** Se a TechStore criar um novo "Frete Black Friday", você **não mexe** na classe `Pedido` nem no `ProcessadorDePagamento`.
+* Você apenas cria uma nova classe (ex: `FreteBlackFriday`) que implementa a interface `EstrategiaDeFrete`.
+* O sistema está **fechado** para modificação (o código core não muda) e **aberto** para extensão (novas regras de frete).
+
+### 3. LSP (Princípio da Substituição de Liskov) - O foco atual
+
+* **O que mudou:** Eliminamos a herança perigosa onde o filho (`FreteGratis`) quebrava a lógica do pai.
+* **Na Prática:** Como agora usamos uma **Interface**, qualquer estratégia de frete que você passar para o `ProcessadorDePagamento` vai funcionar perfeitamente. O "substituto" (qualquer classe de frete) não quebra a expectativa do "cliente" (o processador).
+
+### 4. Extra: DIP (Princípio da Inversão de Dependência)
+
+Embora seja o último princípio do SOLID, nós já o implementamos quando criamos a pasta **Infra**!
+
+* O `ProcessadorDePagamento` não depende de uma classe concreta de banco de dados (`PedidoDatabaseRepository`).
+* Ele depende de uma **Interface** (`PedidoRepository`).
+* Isso significa que o nível superior (seu negócio) não depende do nível inferior (sua tecnologia).
+
+### Resumo para o seu aprendizado:
+
+O projeto está agora em um estado **altamente profissional**.
+
+1. Ele é **fácil de testar** (SRP).
+2. Ele é **fácil de expandir** (OCP).
+3. Ele é **confiável e estável** (LSP).
+4. Ele é **desacoplado do banco de dados** (DIP).
+
+**Você percebe como o código ficou mais "limpo" e organizado em comparação com os primeiros exercícios? Isso é a Arquitetura de Sistemas aplicada na prática!**
