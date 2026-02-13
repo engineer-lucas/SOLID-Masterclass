@@ -16,7 +16,7 @@ public class main {
         // 3. Criamos um pedido
         Pedido pedido1 = new Pedido("PED-789", 1000.0);
 
-        // 4. Demonstração de LSP: trocamos a estratégia sem mudar o serviço [cite: 51, 60]
+        // 4. Demonstração de LSP: trocamos a estratégia sem mudar o serviço
         System.out.println("--- Teste com Frete Padrão ---");
         processador.processar(pedido1, new FretePadrao());
 
